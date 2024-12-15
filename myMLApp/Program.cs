@@ -1,16 +1,13 @@
-﻿
-using MyMLApp;
-
-namespace MyMLApp
+﻿namespace MyMLApp
 {
     class Program
     {
         static void Main()
         {
 
-            
+
             Guestbook guestbook = new Guestbook();
-            
+
             while (true)
             {
                 Console.Clear(); // rensar skärmen
@@ -83,13 +80,13 @@ namespace MyMLApp
                             }
                         }
 
-                        char assessment = makeAssessment(comment);
+                        char assessment = makeAssessment(comment); // bedöm kommentaren
 
                         guestbook.AddGuestbookEntry(name, comment, assessment); // lägg till det godkända och bedömda inlägget i gästboken
                         break; // bryt switch-satsen
                     case 2:
                         Console.Clear();
-                        PrintGuestbookEntries(guestbook);
+                        PrintGuestbookEntries(guestbook); // skriv ut inlägg i gästboken
 
                         Console.CursorVisible = true; // visa markören
                         Console.Write("\nAnge index att radera: "); // skriv ut fråga
@@ -134,17 +131,17 @@ namespace MyMLApp
         private static void PrintGuestbookEntries(Guestbook guestbook) // metod för att skriva ut inlägg i gästboken
         {
             int i = 0; // räknare för att skriva ut index
-            
-            if (guestbook.Length()>0)
-            { 
+
+            if (guestbook.Length() > 0)
+            {
                 Console.WriteLine("Gästboksinlägg:");
                 var approvalData = guestbook.ApprovalData();
-                Console.WriteLine("Positivitesgrad: " + approvalData.Item1 + " av " + approvalData.Item2 + " (" + Math.Round(((double)approvalData.Item1 / approvalData.Item2) * 100, 0) + " %)");
+                Console.WriteLine("Positivitetsgrad: " + approvalData.positiveRemarks + " av " + approvalData.length + " (" + approvalData.approvalRate + " %)");
             }
 
             foreach (GuestbookEntry guestbookText in guestbook.GetGuestbookEntries()) // loopar igenom alla inlägg i gästboken
             {
-                Console.WriteLine("[" + i++ + "] (" + guestbookText.Assessment +") " + guestbookText.Name + " - " + guestbookText.Comment); // skriver ut inlägg. Namn följt av kommentar med " - " emellan
+                Console.WriteLine("[" + i++ + "] (" + guestbookText.Assessment + ") " + guestbookText.Name + " - " + guestbookText.Comment); // skriver ut inlägget formatterat
             };
         }
     }

@@ -38,19 +38,21 @@ namespace MyMLApp
             return length; // returnerar antal inlägg
         }
 
-        public Tuple<int, int> ApprovalData()
+        public (int positiveRemarks, int length, int approvalRate) ApprovalData() // metod för att räkna ut godkännandegrad etc
         {
-            int positiveRemarks = 0; // Börjar med att sätta antalet positiva bedömningar till 0
+            int length = this.Length(); // räknar antal inlägg i gästboken
+            int positiveRemarks = 0; 
 
-            foreach (var entry in guestbookEntries) // Loopar igenom alla inlägg i gästboken
+            foreach (var entry in guestbookEntries) // loopar igenom inlägg i gästboken
             {
-                if (entry.Assessment == '+') // Om bedömningen är positiv så öka antalet positiva bedömningar med 1
+                if (entry.Assessment == '+') // om bedömning är positiv
                 {
-                    positiveRemarks++; 
+                    positiveRemarks++; // ökar räknare för positiva inlägg
                 }
             }
+            int approvalRate = (int)Math.Round(((double)positiveRemarks / length) * 100, 0); // räknar ut godkännandegrad
 
-            return Tuple.Create(positiveRemarks, this.Length());
+            return (positiveRemarks, length, approvalRate); // returnerar antal positiva inlägg, antal inlägg och godkännandegrad
         }
 
         public List<GuestbookEntry> GetGuestbookEntries()
